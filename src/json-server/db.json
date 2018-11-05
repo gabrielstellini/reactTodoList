@@ -1,5 +1,16 @@
 {
   "items": [
-    { "id": 1, "value": "First item"}
+    {
+      "id": 1,
+      "value": "First item"
+    },
+    {
+      "id": 2,
+      "value": "Second item"
+    },
+    {
+      "value": "TODO ITEM",
+      "id": 3
+    }
   ]
 }
