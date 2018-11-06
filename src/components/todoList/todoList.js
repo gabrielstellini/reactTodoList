@@ -1,8 +1,11 @@
 import React, {PureComponent} from "react";
 import TodoItem from "./todoItem/todoItem";
 import AddItem from "./addItem/addItem";
+import firebase from '../../firebase.js';
 
 class TodoList extends PureComponent {
+
+    itemsRef = firebase.database().ref('items');
 
     constructor(props) {
         super(props);
@@ -10,9 +13,10 @@ class TodoList extends PureComponent {
     }
 
     getData = () => {
-        fetch('http://localhost:3000/items')
-            .then(data => data.json())
-            .then((data) => this.setState({items: data}));
+        this.itemsRef.on('value' , (snapshot) => {
+            let data = snapshot.val();
+            this.setState({items: data})
+        });
     };
 
     componentDidMount() {
@@ -20,30 +24,28 @@ class TodoList extends PureComponent {
     }
 
     deleteItemHandler = (event, id) => {
-        fetch(('http://localhost:3000/items/'+ id), {
-            method: 'delete'
-        })
-        .then(() => this.getData())
+        this.itemsRef.child(id).remove();
     };
 
     addItemHandler = (event, text) => {
-        fetch(('http://localhost:3000/items/'), {
-            method: 'post',
-            body: JSON.stringify({"value": text}),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(() => this.getData())
+        let body = {"value": text};
+        this.itemsRef.push(body, () => this.getData())
     };
 
     render() {
-        let todoItems = this.state.items.map(todoItem =>
-            <TodoItem
-                key={todoItem.id}
-                itemId={todoItem.id}
-                text={todoItem.value}
-                deleteItemHandler={this.deleteItemHandler}/>
+        let state = this.state.items;
+
+        let todoItems = Object.keys(this.state.items)
+            .map((todoItemKey) => {
+                let todoItem = state[todoItemKey];
+                 return (
+                     <TodoItem
+                        key={todoItemKey}
+                        itemId={todoItemKey}
+                        text={todoItem.value}
+                        deleteItemHandler={this.deleteItemHandler}/>
+                 )
+            }
         );
 
         return (
