@@ -2,6 +2,8 @@ import React, {PureComponent} from "react";
 import TodoItem from "./todoItem/todoItem";
 import AddItem from "./addItem/addItem";
 import firebase from '../../firebase.js';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../store/Actions';
 
 class TodoList extends PureComponent {
 
@@ -15,7 +17,7 @@ class TodoList extends PureComponent {
     getData = () => {
         this.itemsRef.on('value' , (snapshot) => {
             let data = snapshot.val();
-            this.setState({items: data})
+            this.props.onUpdate(data);
         });
     };
 
@@ -24,7 +26,8 @@ class TodoList extends PureComponent {
     }
 
     deleteItemHandler = (event, id) => {
-        this.itemsRef.child(id).remove();
+        this.itemsRef.child(id).remove()
+            .then(this.getData);
     };
 
     addItemHandler = (event, text) => {
@@ -33,11 +36,11 @@ class TodoList extends PureComponent {
     };
 
     render() {
-        let state = this.state.items;
+        let items = this.props.items;
 
-        let todoItems = Object.keys(this.state.items)
+        let todoItems = Object.keys(items)
             .map((todoItemKey) => {
-                let todoItem = state[todoItemKey];
+                let todoItem = items[todoItemKey];
                  return (
                      <TodoItem
                         key={todoItemKey}
@@ -57,4 +60,14 @@ class TodoList extends PureComponent {
     }
 }
 
-export default TodoList;
+const mapStateToProps = state => {
+    return state
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onUpdate: (items) => dispatch({type: actionTypes.UPDATE, value: items})
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
