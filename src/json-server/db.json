@@ -1,16 +1,16 @@
 {
-  "items": [
-    {
-      "id": 1,
-      "value": "First item"
+  "items" : {
+    "-LQa1fPVvF3GDSnvD_nq" : {
+      "value" : "ayy"
     },
-    {
-      "id": 2,
-      "value": "Second item"
+    "-LQa1wjJZspKnxVYNDPE" : {
+      "value" : "An item"
     },
-    {
-      "value": "TODO ITEM",
-      "id": 3
+    "-LQa1yAA0lJPzi-ovRoX" : {
+      "value" : "Another one"
+    },
+    "-LQbktMZ7EdkE7y_lhAV" : {
+      "value" : "test"
     }
-  ]
+  }
 }
