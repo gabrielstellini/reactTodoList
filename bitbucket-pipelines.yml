@@ -11,7 +11,7 @@ pipelines:
       caches:
         - node
       script:
-        - npm run install
+        - npm install
         - npm build
         - npm install firebase-tools
         - firebase deploy --token ${FIREBASE_TOKEN}
