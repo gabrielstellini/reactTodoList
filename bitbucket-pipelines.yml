@@ -9,10 +9,10 @@ pipelines:
   branches:
     master:
       - step:
-        caches:
-          - node
-        script:
-          - npm install
-          - npm run build
-          - npm run deploy
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run build
+            - npm run deploy
     feature/*:
