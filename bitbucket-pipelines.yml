@@ -11,6 +11,7 @@ pipelines:
       caches:
         - node
       script:
-        - npm install
-        - npm run build
-        - npm run deploy
+        if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
+          - npm install
+          - npm run build
+          - npm run deploy
