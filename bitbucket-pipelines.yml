@@ -6,12 +6,13 @@
 image: node:10.13.0
 
 pipelines:
-  default:
-  - step:
-      caches:
-        - node
-      script:
-        if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
+  branches:
+    master:
+      - step:
+        caches:
+          - node
+        script:
           - npm install
           - npm run build
           - npm run deploy
+    feature/*:
