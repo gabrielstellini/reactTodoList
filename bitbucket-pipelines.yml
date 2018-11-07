@@ -12,6 +12,5 @@ pipelines:
         - node
       script:
         - npm install
-        - npm build --env=prod
-        - npm install -g firebase-tools
-        - firebase deploy --token ${FIREBASE_TOKEN}
+        - npm run build
+        - npm run deploy
