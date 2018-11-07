@@ -11,6 +11,7 @@ pipelines:
       caches:
       - node
       script:
+      - npm install yarn
       - yarn
       - npm install -g firebase-tools
       - npm run build
