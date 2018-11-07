@@ -12,6 +12,6 @@ pipelines:
         - node
       script:
         - npm install
-        - ng build --env=prod
+        - npm build --env=prod
         - npm install -g firebase-tools
         - firebase --only hosting --token ${FIREBASE_TOKEN}
