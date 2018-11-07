@@ -13,5 +13,5 @@ pipelines:
       script:
         - yarn
         - yarn build
-        - yarn install firebase-tools
+        - yarn add firebase-tools
         - firebase deploy --token ${FIREBASE_TOKEN}
