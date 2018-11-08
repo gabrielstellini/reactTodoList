@@ -27,3 +27,8 @@
     text-decoration: none;
     text-transform: uppercase;
 }
+
+.Input {
+    width: 80%;
+    height: 20px;
+}
