@@ -17,8 +17,8 @@ class TodoList extends PureComponent {
     getData = () => {
         this.itemsRef.on('value' , (snapshot) => {
             let data = snapshot.val();
-            this.props.onUpdate(data);
-        });
+            this.props.onReadCompleted(data);
+        }).catch(() => this.props.onReadFailed());
     };
 
     componentDidMount() {
@@ -66,7 +66,21 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onUpdate: (items) => dispatch({type: actionTypes.UPDATE, value: items})
+        onCreateStarted: () => dispatch({type: actionTypes.CREATE_TODO_STARTED}),
+        onCreateCompleted: () => dispatch({type: actionTypes.CREATE_TODO_COMPLETE}),
+        onCreateFailed: () => dispatch({type: actionTypes.CREATE_TODO_FAIL}),
+
+        onReadStarted: () => dispatch({type: actionTypes.READ_TODO_STARTED}),
+        onReadCompleted: (items) => dispatch({type: actionTypes.READ_TODO_COMPLETE, value: items}),
+        onReadFailed: () => dispatch({type: actionTypes.READ_TODO_FAIL}),
+
+        onUpdateStarted: () => dispatch({type: actionTypes.UPDATE_TODO_STARTED}),
+        onUpdateCompleted: () => dispatch({type: actionTypes.UPDATE_TODO_COMPLETE}),
+        onUpdateFailed: () => dispatch({type: actionTypes.UPDATE_TODO_FAIL}),
+
+        onDeleteStarted: () => dispatch({type: actionTypes.DELETE_TODO_STARTED}),
+        onDeleteCompleted: (items) => dispatch({type: actionTypes.DELETE_TODO_COMPLETE, value: items}),
+        onDeleteFailed: () => dispatch({type: actionTypes.DELETE_TODO_FAIL}),
     }
 };
 
